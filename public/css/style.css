@@ -1,0 +1,42 @@
+.icon-sm{
+    font-size: 2rem;
+
+}
+.icon-lg{
+    font-size: 9rem;
+}
+
+.avatar-lg{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+.avatar-sm{
+    width: 2.1rem;
+    height: 2.1rem;
+    object-fit: cover;
+}
+.avatar-md{
+
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: cover;
+}
+.icon-md{
+
+   font-size: 3.5rem;
+}
+
+.xsmall{
+    font-size: 0.8rem;
+}
+
+.grid-img{
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.suggest-space{
+    object-fit: cover;
+}
