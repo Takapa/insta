@@ -52,7 +52,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //validation
+        // $request->validate([
+        //     'category'    => 'required|array|between:1,3',
+        //     'description' => 'required|min:1|max:1000'
+        // ]);
 
         #save the post
         $this->post->user_id = Auth::id();
@@ -64,7 +67,7 @@ class PostController extends Controller
             $category_post[] = ["category_id"=>$category_id];
         endforeach;
 
-        $this->post->categoryPost()->createMany($category_post);
+       $this->post->categoryPost()->createMany($category_post);
 
         // 例）もし1.Travelと3.Foodを選択したら
         // $request->category = ["1=>Travel", "2=>Food"]
@@ -75,6 +78,7 @@ class PostController extends Controller
        return redirect()->route('index');
 
     }
+    
     public function saveImage($request){
         $image_name = time().".".$request->image->extension();
         $request->image->storeAs(self::LOCAL_STORAGE_FOLDER,$image_name);
@@ -127,6 +131,11 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         //
+        $request->validate([
+            'category'    => 'required|array|between:1,3',
+            'description' => 'required|min:1|max:1000'
+        ]);
+
         $post->description = $request->description;
 
         if($request->image){
@@ -146,7 +155,6 @@ class PostController extends Controller
 
        return redirect()->route('post.show',$post);
 
-
     }
 
     public function deleteImage($image_name){
@@ -155,8 +163,6 @@ class PostController extends Controller
         if(Storage::disk('local')->exists($image_path)):
             Storage::disk('local')->delete($image_path);
         endif;
-
-
     }
 
     /**

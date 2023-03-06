@@ -48,9 +48,8 @@
                     <textarea name="introduction" id="introduction" rows="5" class="form-control" placeholder="Describe yourself">{{ old('introduction', $user->introduction) }}</textarea>
                     {{-- error --}}
                 </div>
-
+                
                 <button type="submit" class="btn btn-warning px-5">Save</button>
-
             </form>
         </div>
     </div>

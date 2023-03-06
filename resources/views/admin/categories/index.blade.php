@@ -10,6 +10,7 @@
                 <th>NAME</th>
                 <th>CREATED AT</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -19,35 +20,30 @@
                     <td>{{ $category->name }}</td>
                     <td>{{ $category->created_at }}</td>
                     <td>
-                        <div class="dropdown">
-                            <button class="btn btn-sm" data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-ellipsis"></i>
-                            </button>
-
-                        {{-- @if($post->trashed())
-                            <div class="dropdown-menu">
-                                <button class="dropdown-item text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#deactivate-user-{{ $post->id }}">
-                                    <i class="fa-solid fa-eye"></i>Show {{ $post->id }}
-                                </button>
-                            </div>
-                        </div>
-                        @include('admin.posts.modal.status2')
-
-                        @else
-                            <div class="dropdown-menu">
-                                <button class="dropdown-item text-secondary" data-bs-toggle="modal"
-                                    data-bs-target="#deactivate-user-{{ $post->id }}">
-                                    <i class="fa-solid fa-eye-slash"></i>Hide {{ $post->id }}
-                                </button>
-                            </div>
-                        </div>
-                        @include('admin.posts.modal.status')
-                        @endif --}}
+                        <button class="text-warning border border-none" data-bs-toggle="modal"
+                            data-bs-target="#deactivate-user-{{ $category->id }}">
+                            <i class="fa-solid fa-pen-to-square"></i>Edit
+                        </button>
+                        @include('admin.categories.modal.status')
+                    </td>
+                    <td>
+                        <form action="{{ route('admin.categories.destroy', $category->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i></button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
-
     </table>
+    <form action="{{ route('admin.categories.store') }}" method="post">
+        @csrf
+        <div class="row w-25 mx-1">
+            <input type="text" name="name" class="col-9 border-light">
+            <button type="submit" class="btn btn-success btn-sm col-3">+Add</button>      
+        </div>
+    </form>
+    </div>
+    
 @endsection

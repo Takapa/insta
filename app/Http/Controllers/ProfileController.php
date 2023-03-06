@@ -18,8 +18,37 @@ class ProfileController extends Controller
 
     public function show($id){
         $user = $this->user->findOrFail($id);
+        $following_users = $this->getFollowingUser();
+        $followed_users  = $this->getFollowedUser();
 
-        return view('users.profile.show')->with('user', $user);
+        return view('users.profile.show')
+            ->with('user', $user)
+            ->with('following_users', $following_users)
+            ->with('followed_users', $followed_users);
+    }
+
+    public function getFollowingUser(){
+        $all_users  = User::all()->except(Auth::user()->id);
+        $following_users = [];
+
+        foreach($all_users as $user){
+            if($user->isFollowed()){
+                $following_users[] = $user;
+            }
+        }
+        return $following_users;
+    }
+
+    public function getFollowedUser(){
+        $all_users  = User::all()->except(Auth::user()->id);
+        $followed_users = [];
+
+        foreach($all_users as $user){
+            if($user->isFollowing()){
+                $followed_users[] = $user;
+            }
+        }
+        return $followed_users;
     }
 
     public function edit($id){
@@ -27,6 +56,7 @@ class ProfileController extends Controller
 
         return view('users.profile.edit')->with('user', $user);
     }
+
 
     // public function update(Request $request)
     // {

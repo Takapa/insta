@@ -28,24 +28,25 @@
 
         <div class="row mb-3">
             <div class="col-auto">
-                <a href="{{ route('profile.show', $user->id) }}" class="text-decoration-none text-dark">
+                <a href="{{ route('profile.show', $user->id) }}" name="btn-main" value='page1を表示' class="text-decoration-none text-dark" onclick="SelectPage(1)">
                     <strong>{{ $user->posts->count() }}</strong> posts
                 </a>
             </div>
-
             <div class="col-auto">
-                <a href="#" class="text-decoration-none text-dark">
-                    <strong>0</strong> followers
+                <a href="#" class="text-decoration-none text-dark" name="btn-main" value='page2を表示' onclick="SelectPage(2)">
+                    <strong>{{ $user->followers->count() }}</strong> followers
                 </a>  
             </div>
-
             <div class="col-auto">
-                <a href="#" class="text-decoration-none text-dark">
-                    <strong>0</strong> following
+                <a href="#" class="text-decoration-none text-dark" name="btn-main" value='page3を表示' onclick="SelectPage(3)">
+                    <strong>{{ $user->following->count() }}</strong> following
                 </a>  
             </div>
         </div>
-
         <p class="fw-bold">{{ $user->introduction }}</p>
     </div>
+
+    <script src="{{asset('/js/index.js')}}"></script>
+
+
 </div>

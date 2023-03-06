@@ -16,6 +16,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
+    const ADMIN_ROLE_ID = 1;
+    const USER_ROLE_ID = 2;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -60,7 +63,11 @@ class User extends Authenticatable
         return $this->hasMany(FollowUser::class,'follower_id');
     }
 
-     public function isFollowed(){
+    public function isFollowed(){
         return $this->followers()->where('follower_id',Auth::user()->id)->exists();
-     }
+    }
+
+    public function isFollowing(){
+        return $this->following()->where('following_id',Auth::user()->id)->exists();
+    }
 }

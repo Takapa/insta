@@ -32,6 +32,11 @@
                     </div>
                 @endif
             @endforeach
+            @error('category')
+           <div class="text-danger small">
+                {{$message}}
+            </div> 
+            @enderror
         </div>
         <div class="mb-3">
             <label for="description" class="form-label fw-bold">Description</label>

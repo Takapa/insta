@@ -31,7 +31,12 @@
                     <!-- Left Side Of Navbar -->
                     {{-- a future for students: search bar to be added --}}
                     <ul class="navbar-nav me-auto">
-
+                        <div class="ms-5">
+                            <form action="{{ route('search') }}" method="get">
+                                <input type="search" name="search" class="col-9" placeholder="Search..." style="float: left">
+                                <button type="submit" class="btn btn-primary btn-sm col-3">Search</button>
+                            </form>
+                        </div>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -74,11 +79,13 @@
                                
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
-                                    @if (Auth::user()->role_id == 1)
+                                    {{-- @if (Auth::user()->role_id == 1) --}}
+                                    @can('admin')
                                         <a href="{{ route('admin.index') }}" class="dropdown-item">
                                             <i class="fa-solid fa-user-gear"></i>Admin
                                         </a>
-                                    @endif
+                                    @endcan
+                                    {{-- @endif --}}
 
                                     <a href="{{ route('profile.show', Auth::user()->id) }}" class="dropdown-item">
                                         <i class="fa-solid fa-circle-user"></i>Profile

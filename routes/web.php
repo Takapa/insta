@@ -25,10 +25,12 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/category', [CategoryController::class, 'store']);
+// Route::get('/category', [CategoryController::class, 'store']);
+
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+    Route::get('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
 
     Route::resource('/post',PostController::class); //create all things from index to delete.  index php artisan route list
     Route::resource('/comment',CommentController::class)->except('store');
@@ -38,7 +40,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::post('/comment/{post_id}/store', [CommentController::class, 'store'])->name('comment.store');
 
-    Route::group(["prefix" => "admin/", "as" => "admin."], function () {
+    Route::group(["prefix" => "admin/", "as" => "admin.", 'middleware' => 'can:admin'], function () {
         #users
         Route::get('/users',[UsersController::class,'index'])->name('index');
         Route::delete('/users/{id}/deactivate',[UsersController::class,'deactivate'])->name('deactivate');
@@ -51,5 +53,8 @@ Route::group(['middleware' => 'auth'], function(){
 
         #categories
         Route::get('/categories',[CategoriesController::class,'index'])->name('categories.index');
+        Route::post('/categories/store',[CategoriesController::class,'store'])->name('categories.store');
+        Route::patch('/categories/{id}/update',[CategoriesController::class,'update'])->name('categories.update');
+        Route::delete('/categories/{id}/destroy',[CategoriesController::class,'destroy'])->name('categories.destroy');
     });
 });
